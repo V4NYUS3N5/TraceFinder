@@ -40,27 +40,32 @@ Windows 平台数字取证工具，支持从 Chromium 内核浏览器（Chrome /
 - Python 3.8+
 - 标准库（无需额外安装依赖）
 
-## 使用方法
+## 运行
 
 ```bash
-# 直接在控制台输出报告
-python -m WebTrail.main
+cd WebTrail
+
+# 直接在控制台输出
+python main.py
+
+# 静默模式
+python main.py -q
 
 # 保存报告到文件
-python -m WebTrail.main -o report.txt
+python main.py -o report.txt
 
-# 静默模式 + 导出 JSON
-python -m WebTrail.main -q --json traces.json
+# 导出 JSON
+python main.py --json traces.json
 
 # 同时输出报告和 JSON
-python -m WebTrail.main -o report.txt --json traces.json
+python main.py -o report.txt --json traces.json
 ```
 
 ## 命令行参数
 
 | 参数 | 说明 |
 |------|------|
-| `-o`, `--output` | 保存文本报告到指定文件 |
+| `-o`, `--output` | 保存报告到指定文件 |
 | `--json` | 导出 JSON 格式数据到指定文件 |
 | `-q`, `--quiet` | 静默模式，不打印 Banner |
 
@@ -68,7 +73,7 @@ python -m WebTrail.main -o report.txt --json traces.json
 
 ```
 WebTrail/
-├── main.py                  # CLI 入口，协调各模块
+├── main.py                  # 入口，协调各模块
 ├── extractors/
 │   ├── chromium.py          # Chromium 内核浏览器提取
 │   └── firefox.py           # Firefox 浏览器提取
@@ -86,7 +91,7 @@ WebTrail/
 ╚══════════════════════════════════════════════════════════╝
 
 [1] 浏览历史 | Chrome
-    2024-06-12 15:30:00  https://www.example.com  - 示例网站
+    2024-06-12 15:30:00  https://www.example.com
 
 [2] 下载记录 | Edge
     2024-06-12 14:20:00  setup.exe  45.3 MB  已完成
@@ -95,18 +100,18 @@ WebTrail/
 
 ================================================================================
 统计摘要
-总计: 156 条痕迹
-  - 浏览历史: 89
-  - 书签: 32
-  - 下载记录: 12
-  ...
-可疑痕迹: 3 条
-  [浏览历史] [Chrome] ...pastebin.com/...
+  总痕迹数: 156
+  【按类型统计】
+    浏览历史: 89
+    书签: 32
+    ...
+  【可疑标记: 3 条】
+    [浏览历史] [Chrome] ...pastebin.com/...
 ```
 
 ## 注意事项
 
 - 仅适用于 Windows 系统
 - 部分浏览器数据可能被锁定，工具通过复制数据库副本读取以避免冲突
-- 出于隐私保护，登录凭据仅统计数量，不输出明文密码
-- 运行需要读取注册表和系统命令（`ipconfig /displaydns`），建议以管理员权限运行以获取完整数据
+- 登录凭据仅统计数量，不输出明文密码
+- 建议以管理员权限运行以获取完整系统数据
