@@ -45,7 +45,6 @@ def main():
     if not args.quiet:
         print(BANNER)
 
-    # 提取
     traces = extract_chromium() + extract_firefox() + extract_system()
 
     if not traces:
@@ -64,7 +63,6 @@ def main():
         except UnicodeEncodeError:
             print(report.encode('utf-8', errors='replace').decode('utf-8', errors='replace'))
 
-    # 控制台简要统计
     sus = sum(1 for t in traces if t.get("suspicious"))
     print(f"\n[+] 总计 {len(traces)} 条痕迹, 其中可疑 {sus} 条")
 
